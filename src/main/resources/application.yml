@@ -5,3 +5,7 @@ spring:
     url: jdbc:mysql://localhost/forohub_api
     username: root
     password: root
+
+api:
+  security:
+    secret: contrasena1

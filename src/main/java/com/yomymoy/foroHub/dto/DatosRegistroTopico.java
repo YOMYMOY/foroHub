@@ -9,6 +9,8 @@ public record DatosRegistroTopico(
         @NotBlank
         String mensaje,
         @NotBlank
-        Long idCurso
+        Long idCurso,
+        @NotBlank
+        Long idAutor
 ) {
 }

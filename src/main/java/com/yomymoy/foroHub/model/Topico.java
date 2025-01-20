@@ -2,7 +2,6 @@ package com.yomymoy.foroHub.model;
 
 import com.yomymoy.foroHub.dto.DatosActualizarTopico;
 import com.yomymoy.foroHub.dto.DatosRegistroTopico;
-import com.yomymoy.foroHub.dto.TopicoDTO;
 import com.yomymoy.foroHub.model.enums.StatusTopico;
 import com.yomymoy.foroHub.repository.CursoRepository;
 import jakarta.persistence.*;
@@ -16,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDateTime;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Optional;
 
 @Entity(name = "Topico")
 @Table(name = "topicos")
@@ -42,20 +42,16 @@ public class Topico {
     @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Respuesta> respuestas;
 
-    @Autowired
-    private CursoRepository cursoRepository;
-
-    public Topico(@Valid DatosRegistroTopico datos) {
+    public Topico(@Valid DatosRegistroTopico datos, Curso curso, Usuario autor) {
         this.titulo = datos.titulo();
         this.mensaje = datos.mensaje();
         this.fechaCreacion = LocalDateTime.now();
         this.status = StatusTopico.ABIERTO;
-
-        this.curso = cursoRepository.findById(datos.idCurso())
-                .orElseThrow(() -> new RuntimeException("Curso no encontrado."));
+        this.autor = autor;
+        this.curso = curso;
     }
 
-    public void actualizarDatos(DatosActualizarTopico datos) {
+    public void actualizarDatos(DatosActualizarTopico datos, Curso curso) {
         if (datos.status() != null) {
             if (EnumSet.allOf(StatusTopico.class).contains(datos.status())) {
                 this.status = datos.status();
@@ -64,8 +60,7 @@ public class Topico {
             }
         }
         if (datos.idCurso() != null) {
-            this.curso = cursoRepository.findById(datos.idCurso())
-                    .orElseThrow(() -> new RuntimeException("Curso no encontrado."));
+            this.curso = curso;
         }
 
     }
