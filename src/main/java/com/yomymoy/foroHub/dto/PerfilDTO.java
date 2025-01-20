@@ -1,6 +1,6 @@
 package com.yomymoy.foroHub.dto;
 
-public record PefilDTO(
+public record PerfilDTO(
         Long id,
         String nombre
 ) {

@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: foroHub
+  datasource:
+    url: jdbc:mysql://localhost/forohub_api
+    username: root
+    password: root

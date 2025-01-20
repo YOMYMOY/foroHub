@@ -6,6 +6,6 @@ public record UsuarioDTO(
         Long id,
         String nombre,
         String correoElectronico,
-        List<PefilDTO> perfiles
+        String contrasena
 ) {
 }
